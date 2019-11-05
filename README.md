@@ -1,8 +1,6 @@
 # CS4320 Group 8 - Semester Project Repo
 
-### [![Design Document](https://github.com/computationalmystic/sengfs19-group8/blob/master/Sprint%201%20Design%20Document.pdf)
-
-
+### ![Design Document](https://github.com/computationalmystic/sengfs19-group8/blob/master/Sprint%201%20Design%20Document.pdf)
 
 
 # Augur
