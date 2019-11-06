@@ -4,8 +4,16 @@
 
 ### Sprint 2 Goals and Additions:
 - Create the basic UI for the second use case, including a basic homepage that leads to each to individual metric.
+  - ChartJS
+  -
 - Create the structure of the metric function, including name and the SQL needed.
-- OPTIONAL: See if we can get the UI and API working in sync, this will help as a base for the other metrics
+- OPTIONAL: See if we can get the UI and API working in sync, this will help as a base for the two other metrics
+
+---
+
+### Work Items
+1. Homepage and 1 metric UI page
+2. 
 
 ---
 
