@@ -13,7 +13,7 @@
 
 ### Work Items
 1. Homepage and 1 metric UI page
-2. 
+2. Metric function implemented (can't test until public IP ports are open)
 
 ---
 
@@ -21,4 +21,4 @@
 
 - 11/5/19 - Created Sprint 2 Readme
 - 11/5/19 - Added branches for each team member, as well as production and testing branches
--
+- 11/11/19 Added new "assignees" metric under /augur/metrics/assignee
