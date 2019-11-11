@@ -8,17 +8,24 @@ import { CompareIssuesComponent } from './compare-issues/compare-issues.componen
 import { CompareContributorsComponent } from './compare-contributors/compare-contributors.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { HttpClientModule } from '@angular/common/http';
+import { ReposComponent } from './repos/repos.component'; 
+// import { HttpModule } from '@angular/http';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ListIssuesComponent,
     CompareIssuesComponent,
-    CompareContributorsComponent
+    CompareContributorsComponent,
+    ReposComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

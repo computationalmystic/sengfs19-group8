@@ -1,21 +1,20 @@
-<h1>Repositories</h1>
+<h1>Issues</h1>
+<h3>Below are the issues with assignees per project in the repo you selected.</h3>
 <br>
 
-<ng-container *ngIf="!repos">
-    <h4>Loading repository information...</h4>
+<ng-container *ngIf="!issues">
+    <h4>Loading issue information...</h4>
 </ng-container>
 
-<ng-container *ngIf="repos">
-    <div *ngFor="let repo of repos">
-       <div routerLink ="/list-issues/{{repo.repo_id}}/{{repo.repo_group_id}}">
-        groupId:{{repo.repo_group_id}},repoId:{{repo.repo_id}}
-        <h3 style=" font-size:small">Repo Name: {{repo.repo_name}}</h3>
-        <h3 style=" font-size:small">Repo ID: {{repo.repo_id}} </h3>
-        <h3 style=" font-size:small">Repo URL: {{repo.url}}</h3>
-        <h3 style=" font-size:small">Repo Group ID: {{repo.repo_group_id}}</h3>
-        <h3 style=" font-size:small">All-time Commits: {{repo.commits_all_time}}</h3>
-        <h3 style=" font-size:small">Description: {{repo.description}}</h3>
-        <br>
-      </div>
+<ng-container *ngIf="issues">
+    <div *ngFor="let issue of issues">
+        <div>
+            <h3 style=" font-size:small">User ID: </h3>
+            <h3 style=" font-size:small">Issue ID: </h3>
+            <h3 style=" font-size:small">Issue Body: </h3>
+            <h3 style=" font-size:small">Git Issue Number:</h3>
+            <h3 style=" font-size:small">Comment Count: </h3>
+            <br>
+        </div>
     </div>
 </ng-container>
