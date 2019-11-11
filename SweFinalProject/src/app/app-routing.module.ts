@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'list-issues', component: ListIssuesComponent},
+  { path: 'list-issues/:groupId/:repoId', component: ListIssuesComponent},
   { path: 'compare-contributors', component: CompareContributorsComponent},
   { path: 'compare-issues', component: CompareIssuesComponent},
   { path: '**', component: HomeComponent}
