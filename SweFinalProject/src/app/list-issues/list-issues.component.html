@@ -1,0 +1,20 @@
+<h1>Issues</h1>
+<h3>Below are the issues with assignees per project in the repo you selected.</h3>
+<br>
+
+<ng-container *ngIf="!issues">
+    <h4>Loading issue information...</h4>
+</ng-container>
+
+<ng-container *ngIf="issues">
+    <div *ngFor="let issue of issues">
+        <div>
+            <h3 style=" font-size:small">User ID: </h3>
+            <h3 style=" font-size:small">Issue ID: </h3>
+            <h3 style=" font-size:small">Issue Body: </h3>
+            <h3 style=" font-size:small">Git Issue Number:</h3>
+            <h3 style=" font-size:small">Comment Count: </h3>
+            <br>
+        </div>
+    </div>
+</ng-container>

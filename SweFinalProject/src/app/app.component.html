@@ -1,0 +1,26 @@
+<!-- bootstrap css, necessary -->
+        <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- bootstrap theme, optional --> 
+        <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" integrity="sha384-h21C2fcDk/eFsW9sC9h0dhokq5pDinLNklTKoxIZRUn3+hvmgQSffLLQ4G4l2eEr" crossorigin="anonymous">
+        
+
+<div class="container">
+  <div class="header clearfix">
+      <nav role="navigation">
+          <ul class="nav nav-pills nav-tabs pull-right">
+
+              <li [routerLinkActive]="['active']"><a href="/home" [routerLink]="['home']">Home</a></li>
+              <li [routerLinkActive]="['active']"><a href="/repos" [routerLink]="['repos']">List Issues</a></li>
+              <li [routerLinkActive]="['active']"><a href="/compare-contributors" [routerLink]="['compare-contributors']">Compare Contributors</a></li>
+              <li [routerLinkActive]="['active']"><a href="/compare-issues" [routerLink]="['compare-issues']">Compare Issues</a></li>
+            
+          </ul>
+      </nav>
+      <h2 class="text-muted">Group 8 Final Project</h2>
+  </div>
+  <div id="stage">
+    <router-outlet></router-outlet>
+  </div>
+</div>
