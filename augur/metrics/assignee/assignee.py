@@ -20,9 +20,10 @@ def assignee_issues_assigned_to(self, repo_group_id, repo_id=None, period='day',
     if repo_id:
         assigneeIssue = s.sql.text("""
             SELECT
-                date_trunc(:period, new_date::DATE) as issue_date,
-                COUNT(gh_user_id),
-                repo_name
+                issue_assignee_id,
+                issue_id,
+                issue_body,
+                comment_count
             FROM (
                 SELECT
                     gh_user_id,
