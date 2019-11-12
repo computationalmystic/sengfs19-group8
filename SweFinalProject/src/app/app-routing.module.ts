@@ -9,13 +9,13 @@ import { ReposComponent } from './repos/repos.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'repos', component: ReposComponent},
   { path: 'list-issues/:groupId/:repoId', component: ListIssuesComponent},
   { path: 'compare-contributors', component: CompareContributorsComponent},
   { path: 'compare-issues', component: CompareIssuesComponent},
-  { path: '**', component: HomeComponent}
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ]
 
 
