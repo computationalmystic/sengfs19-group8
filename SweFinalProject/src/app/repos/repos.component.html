@@ -1,0 +1,22 @@
+<h1>Repositories</h1>
+<h3>Click on the repo you would like to see its issues.</h3>
+<br>
+
+<ng-container *ngIf="!repos">
+    <h4>Loading repository information...</h4>
+</ng-container>
+
+<ng-container *ngIf="repos">
+    <div *ngFor="let repo of repos">
+       <div routerLink ="/list-issues/{{repo.repo_id}}/{{repo.repo_group_id}}">
+        groupId:{{repo.repo_group_id}},repoId:{{repo.repo_id}}
+        <h3 style=" font-size:small">Repo Name: {{repo.repo_name}}</h3>
+        <h3 style=" font-size:small">Repo ID: {{repo.repo_id}} </h3>
+        <h3 style=" font-size:small">Repo URL: {{repo.url}}</h3>
+        <h3 style=" font-size:small">Repo Group ID: {{repo.repo_group_id}}</h3>
+        <h3 style=" font-size:small">All-time Commits: {{repo.commits_all_time}}</h3>
+        <h3 style=" font-size:small">Description: {{repo.description}}</h3>
+        <br>
+      </div>
+    </div>
+</ng-container>
