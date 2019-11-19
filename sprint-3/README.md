@@ -24,4 +24,4 @@
 - 11/19/2019 - Server issue on the backend resolved
  - The frontend still won't be able to connect to the backend
  - However, Jacob and Davin can move forward with testing the endpoints
- - run the backend only with "augur run", use 129.114.104.249:5000/api/unstable/repos
+ - run the backend only with "augur run", use 129.114.104.249:5000/api/unstable/repos to connect to the data
