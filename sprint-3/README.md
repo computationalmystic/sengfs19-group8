@@ -18,3 +18,5 @@
 - 11/16/19 - Attempted to run augur on local VM
 - 11/18/19 - Created Sprint 3 Readme
 - 11/18/19 - Noticed database permissions were wrong for augur, rebuilt the database and will try it locally on VM
+- 11/19/2019 The server is no longer getting errors returning data, but the database is still empty
+ - Need to load sample data into database
