@@ -14,7 +14,7 @@ def issues_top_ten_number_of_assignees(self, repo_group_id):
 
     :param repo_url: the repository's URL
     """
-    if not repo_id:
+    if not repo_group_id:
         assigneesIssueCountSQL = s.sql.text("""
             SELECT rg_name, repo_name, issue_title, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE
             FROM issues, repo, repo_groups, issue_assignees
