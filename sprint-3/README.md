@@ -26,4 +26,4 @@
   - However, Jacob and Davin can move forward with testing the endpoints
   - run the backend only with "augur run", use 129.114.104.249:5000/api/unstable/repos to connect to the data
 - 11/20/2019 - Issue assignees endpoint is finished
-  - Returns repo group ID, assignee count, and issue date
+  - Returns repo group ID, issue title, assignee count, and issue date
