@@ -8,15 +8,15 @@ import pandas as pd
 from augur.util import logger, annotate, add_metrics
 
 @annotate(tag='issues-top-ten-number-of-assignees')
-def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
+def issues_top_ten_number_of_assignees(self, repo_group_id):
     """
-    Returns top ten issues based on greatest number of assignees
+    Returns top ten issues based on greatest number of assignees for each repo group
 
     :param repo_url: the repository's URL
     """
     if not repo_id:
         assigneesIssueCountSQL = s.sql.text("""
-            SELECT rg_name, repo_name, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE
+            SELECT rg_name, repo_name, issue_title, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE
             FROM issues, repo, repo_groups, issue_assignees
             WHERE issue_state = 'open'
             AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_id = :repo_id)
@@ -26,11 +26,11 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
             GROUP BY date, repo_groups.rg_name
             ORDER BY date
         """)
-        results = pd.read_sql(assigneesIssueCountSQL, self.database, params={'repo_group_id': repo_group_id, 'repo_id': repo_id,})
+        results = pd.read_sql(assigneesIssueCountSQL, self.database, params={'repo_group_id': repo_group_id})
         return results
     else:
         assigneesIssueCountSQL = s.sql.text("""
-            SELECT repo.repo_id, repo_name, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE, repo_name
+            SELECT repo.repo_id, repo_name, issue_title, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE, repo_name
             FROM issues, repo, repo_groups, issue_assignees
             WHERE issue_state = 'open'
             AND issues.repo_id = :repo_id
