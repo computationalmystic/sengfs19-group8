@@ -5,7 +5,7 @@ def create_issue_routes(server):
     metrics = server._augur.metrics
 
     """
-    @api {get} /repo-groups/:repo_group_id/issues_top_ten_number_of_assignees Issues New (Repo Group)
+    @api {get} /repo-groups/:repo_group_id/repos/:repo_id/issues_top_ten_number_of_assignees Issues New (Repo Group)
     @apiName issues-top-ten-number-of-assignees
     @apiGroup Evolution
     @apiDescription Count of open issues.
