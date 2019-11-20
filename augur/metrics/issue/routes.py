@@ -8,31 +8,20 @@ def create_issue_routes(server):
     @api {get} /repo-groups/:repo_group_id/issues_top_ten_number_of_assignees Issues New (Repo Group)
     @apiName issues-top-ten-number-of-assignees
     @apiGroup Evolution
-    @apiDescription Top ten issues based on number of assignees
-                    <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/Issues_New.md">CHAOSS Metric Definition</a>
+    @apiDescription Count of open issues.
+                    <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors-new.md">CHAOSS Metric Definition</a>
     @apiParam {string} repo_group_id Repository Group ID
-    @apiParam {string=day, week, month, year} [period="day"] Periodicity specification.
-    @apiParam {string} [begin_date="1970-1-1 0:0:0"] Beginning date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
-    @apiParam {string} [end_date="current date"] Ending date specification. E.g. values: `2018`, `2018-05`, `2019-05-01`
     @apiSuccessExample {json} Success-Response:
                     [
                         {
-                            "repo_id": 21000,
-                            "repo_name": "rails",
-                            "date": "2019-01-01T00:00:00.000Z",
-                            "issues": 318
+                            "rg_name": "Netflix",
+                            "open_count": 1,
+                            "date": "2017-09-11T00:00:00.000Z"
                         },
                         {
-                            "repo_id": 21002,
-                            "repo_name": "acts_as_list",
-                            "date": "2009-01-01T00:00:00.000Z",
-                            "issues": 1
-                        },
-                        {
-                            "repo_id": 21002,
-                            "repo_name": "acts_as_list",
-                            "date": "2010-01-01T00:00:00.000Z",
-                            "issues": 7
+                            "rg_name": "Netflix",
+                            "open_count": 4,
+                            "date": "2019-06-10T00:00:00.000Z"
                         }
                     ]
     """
