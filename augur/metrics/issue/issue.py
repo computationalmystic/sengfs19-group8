@@ -8,75 +8,40 @@ import pandas as pd
 from augur.util import logger, annotate, add_metrics
 
 @annotate(tag='issues-top-ten-number-of-assignees')
-def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None, period='day', begin_date=None, end_date=None):
+def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
     """
-    Custom endpoint for CS4320 Project, returns the top ten issues by number of assignees for each repo
+    Returns number of lines changed per author per day
 
-    :param repo_id: The repository's id
-    :param repo_group_id: The repository's group id
-    :param period: To set the periodicity to 'day', 'week', 'month' or 'year', defaults to 'day'
-    :param begin_date: Specifies the begin date, defaults to '1970-1-1 00:00:00'
-    :param end_date: Specifies the end date, defaults to datetime.now()
-    :return: DataFrame of persons/period
+    :param repo_url: the repository's URL
     """
-
-    if not begin_date:
-        begin_date = '1970-1-1 00:00:00'
-    if not end_date:
-        end_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-    if repo_id:
-        issueNewContributor = s.sql.text("""
-            SELECT
-                date_trunc(:period, new_date::DATE) as issue_date,
-                COUNT(gh_user_id),
-                repo_name
-            FROM (
-                SELECT
-                    gh_user_id,
-                    MIN(issues.created_at) AS new_date,
-                    repo_name
-                FROM
-                    issues JOIN repo ON issues.repo_id = repo.repo_id
-                WHERE
-                    issues.repo_id = :repo_id
-                    AND issues.pull_request IS NULL
-                    AND issues.created_at BETWEEN :begin_date AND :end_date
-                GROUP BY gh_user_id, repo_name
-            ) as abc
-            GROUP BY issue_date, repo_name
-            ORDER BY issue_date
+    if not repo_id:
+        openIssueCountSQL = s.sql.text("""
+            SELECT rg_name, count(issue_id) AS open_count, date_trunc('week', issues.created_at) AS DATE
+            FROM issues, repo, repo_groups
+            WHERE issue_state = 'open'
+            AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_group_id = :repo_group_id)
+            AND repo.repo_id = issues.repo_id
+            AND repo.repo_group_id = repo_groups.repo_group_id
+            AND issues.pull_request IS NULL
+            GROUP BY date, repo_groups.rg_name
+            ORDER BY date
         """)
-        results = pd.read_sql(issueNewContributor, self.database, params={'repo_id': repo_id, 'period': period,
-                                                                    'begin_date': begin_date, 'end_date': end_date})
+        results = pd.read_sql(assigneesIssueCountSQL, self.database, params={'repo_group_id': repo_group_id})
+        return results
     else:
-        issueNewContributor = s.sql.text("""
-            SELECT
-                repo.repo_id,
-                repo_name,
-                date_trunc(:period, new_date::DATE) as issue_date,
-                COUNT(gh_user_id)
-            FROM (
-                SELECT
-                    repo_id,
-                    gh_user_id,
-                    MIN(created_at) AS new_date
-                FROM
-                    issues
-                WHERE
-                    issues.pull_request IS NULL
-                    AND repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)
-                    AND created_at BETWEEN :begin_date AND :end_date
-                GROUP BY gh_user_id, repo_id
-            ) as abc, repo
-            WHERE repo.repo_id= abc.repo_id
-            GROUP BY repo.repo_id, issue_date
-            ORDER BY issue_date
+        openIssueCountSQL = s.sql.text("""
+            SELECT repo.repo_id, count(issue_id) AS open_count, date_trunc('week', issues.created_at) AS DATE, repo_name
+            FROM issues, repo, repo_groups
+            WHERE issue_state = 'open'
+            AND issues.repo_id = :repo_id
+            AND repo.repo_id = issues.repo_id
+            AND repo.repo_group_id = repo_groups.repo_group_id
+            AND issues.pull_request IS NULL
+            GROUP BY date, repo.repo_id
+            ORDER BY date
         """)
-        results = pd.read_sql(issueNewContributor, self.database,
-                              params={'repo_group_id': repo_group_id, 'period': period,
-                                      'begin_date': begin_date, 'end_date': end_date})
-    return results
+        results = pd.read_sql(assigneesIssueCountSQL, self.database, params={'repo_id': repo_id})
+        return results
 
 
 @annotate(tag='issues-first-time-opened')
