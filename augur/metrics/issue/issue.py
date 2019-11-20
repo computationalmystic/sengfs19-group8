@@ -26,7 +26,7 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
             GROUP BY date, repo_groups.rg_name
             ORDER BY date
         """)
-        results = pd.read_sql(assigneesIssueCountSQL, self.database, params={'repo_group_id': repo_group_id})
+        results = pd.read_sql(assigneesIssueCountSQL, self.database, params={'repo_group_id': repo_group_id, 'repo_id': repo_id,})
         return results
     else:
         assigneesIssueCountSQL = s.sql.text("""
