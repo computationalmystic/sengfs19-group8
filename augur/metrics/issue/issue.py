@@ -10,19 +10,20 @@ from augur.util import logger, annotate, add_metrics
 @annotate(tag='issues-top-ten-number-of-assignees')
 def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
     """
-    Returns number of lines changed per author per day
+    Returns top ten issues based on greatest number of assignees
 
     :param repo_url: the repository's URL
     """
     if not repo_id:
         assigneesIssueCountSQL = s.sql.text("""
-            SELECT rg_name, count(issue_id) AS open_count, date_trunc('week', issues.created_at) AS DATE
-            FROM issues, repo, repo_groups
+            SELECT rg_name, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE
+            FROM issues, repo, repo_groups, issue_assignees
             WHERE issue_state = 'open'
             AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_group_id = :repo_group_id)
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
             AND issues.pull_request IS NULL
+            AND issues.issue_id = issue_assignees.issue_id
             GROUP BY date, repo_groups.rg_name
             ORDER BY date
         """)
@@ -30,13 +31,14 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
         return results
     else:
         assigneesIssueCountSQL = s.sql.text("""
-            SELECT repo.repo_id, count(issue_id) AS open_count, date_trunc('week', issues.created_at) AS DATE, repo_name
-            FROM issues, repo, repo_groups
+            SELECT repo.repo_id, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE, repo_name
+            FROM issues, repo, repo_groups, issue_assignees
             WHERE issue_state = 'open'
             AND issues.repo_id = :repo_id
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
             AND issues.pull_request IS NULL
+            AND issues.issue_id = issue_assignees.issue_id
             GROUP BY date, repo.repo_id
             ORDER BY date
         """)
