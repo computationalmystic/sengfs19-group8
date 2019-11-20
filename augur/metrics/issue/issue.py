@@ -7,14 +7,10 @@ import sqlalchemy as s
 import pandas as pd
 from augur.util import logger, annotate, add_metrics
 
-""""
-Custom endpoint for Final Project
-""""
-
 @annotate(tag='issues-top-ten-number-of-assignees')
 def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None, period='day', begin_date=None, end_date=None):
     """
-    Returns the top ten issues by number of assignees for each repo
+    Custom endpoint for CS4320 Project, returns the top ten issues by number of assignees for each repo
 
     :param repo_id: The repository's id
     :param repo_group_id: The repository's group id
