@@ -16,7 +16,7 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
     """
     if not repo_id:
         openIssueCountSQL = s.sql.text("""
-            SELECT rg_name, issue_title, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE
+            SELECT rg_name, issues.issue_title, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE
             FROM issues, repo, repo_groups, issue_assignees
             WHERE issue_state = 'open'
             AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_group_id = :repo_group_id)
