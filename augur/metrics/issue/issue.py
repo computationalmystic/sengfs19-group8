@@ -24,7 +24,7 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
             AND repo.repo_group_id = repo_groups.repo_group_id
             AND issues.pull_request IS NULL
             AND issues.issue_id = issue_assignees.issue_id
-            GROUP BY date, repo_groups.rg_name
+            GROUP BY date, repo_groups.rg_name, issues.issue_title
             ORDER BY date
         """)
         results = pd.read_sql(openIssueCountSQL, self.database, params={'repo_group_id': repo_group_id})
