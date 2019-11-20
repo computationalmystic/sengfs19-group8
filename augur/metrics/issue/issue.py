@@ -15,32 +15,32 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
     :param repo_url: the repository's URL
     """
     if not repo_id:
-        assigneesIssueCountSQL = s.sql.text("""
-            SELECT rg_name, repo_name, issue_title, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE
-            FROM issues, repo, repo_groups, issue_assignees
+        openIssueCountSQL = s.sql.text("""
+            SELECT rg_name, count(issue_id) AS open_count, date_trunc('week', issues.created_at) AS DATE
+            FROM issues, repo, repo_groups
             WHERE issue_state = 'open'
-            AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_id = :repo_id)
+            AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_group_id = :repo_group_id)
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
-            AND issues.issue_id = issue_assignees.issue_id
+            AND issues.pull_request IS NULL
             GROUP BY date, repo_groups.rg_name
             ORDER BY date
         """)
-        results = pd.read_sql(assigneesIssueCountSQL, self.database, params={'repo_group_id': repo_group_id})
+        results = pd.read_sql(openIssueCountSQL, self.database, params={'repo_group_id': repo_group_id})
         return results
     else:
-        assigneesIssueCountSQL = s.sql.text("""
-            SELECT repo.repo_id, repo_name, issue_title, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE, repo_name
-            FROM issues, repo, repo_groups, issue_assignees
+        openIssueCountSQL = s.sql.text("""
+            SELECT repo.repo_id, count(issue_id) AS open_count, date_trunc('week', issues.created_at) AS DATE, repo_name
+            FROM issues, repo, repo_groups
             WHERE issue_state = 'open'
             AND issues.repo_id = :repo_id
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
-            AND issues.issue_id = issue_assignees.issue_id
+            AND issues.pull_request IS NULL
             GROUP BY date, repo.repo_id
             ORDER BY date
         """)
-        results = pd.read_sql(assigneesIssueCountSQL, self.database, params={'repo_id': repo_id})
+        results = pd.read_sql(openIssueCountSQL, self.database, params={'repo_id': repo_id})
         return results
 
 
