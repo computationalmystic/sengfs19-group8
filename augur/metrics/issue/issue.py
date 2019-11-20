@@ -22,7 +22,6 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
             AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_group_id = :repo_group_id)
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
-            AND issues.pull_request IS NULL
             AND issues.issue_id = issue_assignees.issue_id
             GROUP BY date, repo_groups.rg_name
             ORDER BY date
@@ -37,7 +36,6 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
             AND issues.repo_id = :repo_id
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
-            AND issues.pull_request IS NULL
             AND issues.issue_id = issue_assignees.issue_id
             GROUP BY date, repo.repo_id
             ORDER BY date
