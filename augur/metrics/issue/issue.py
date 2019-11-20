@@ -10,6 +10,7 @@ from augur.util import logger, annotate, add_metrics
 """"
 Custom endpoint for Final Project
 """"
+
 @annotate(tag='issues-top-ten-number-of-assignees')
 def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None, period='day', begin_date=None, end_date=None):
     """
