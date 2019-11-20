@@ -8,7 +8,7 @@ import pandas as pd
 from augur.util import logger, annotate, add_metrics
 
 @annotate(tag='issues-top-ten-number-of-assignees')
-def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id):
+def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
     """
     Returns top ten issues based on greatest number of assignees
 
