@@ -15,7 +15,7 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
     :param repo_url: the repository's URL
     """
     if not repo_id:
-        openIssueCountSQL = s.sql.text("""
+        assigneesIssueCountSQL = s.sql.text("""
             SELECT rg_name, count(issue_id) AS open_count, date_trunc('week', issues.created_at) AS DATE
             FROM issues, repo, repo_groups
             WHERE issue_state = 'open'
@@ -29,7 +29,7 @@ def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
         results = pd.read_sql(assigneesIssueCountSQL, self.database, params={'repo_group_id': repo_group_id})
         return results
     else:
-        openIssueCountSQL = s.sql.text("""
+        assigneesIssueCountSQL = s.sql.text("""
             SELECT repo.repo_id, count(issue_id) AS open_count, date_trunc('week', issues.created_at) AS DATE, repo_name
             FROM issues, repo, repo_groups
             WHERE issue_state = 'open'
