@@ -25,11 +25,11 @@ export default class AugurAPI {
     [key: string]: any// Add index signature
   };
 
-  constructor(hostURL: string = 'http://augur.osshealth.io:5000', version: string = '/api/unstable', autobatch: any = null) {
+  constructor(hostURL: string = 'http://129.114.104.249:8081', version: string = '/api/unstable', autobatch: any = null) {
     this.__downloadedGitRepos = []
 
     this._version = version || '/api/unstable'
-    this._host = hostURL || 'http://augur.osshealth.io:5000'
+    this._host = hostURL || 'http://129.114.104.249:8081'
     this.__cache = {}
     this.__timeout = null
     this.__pending = {}

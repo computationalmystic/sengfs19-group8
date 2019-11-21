@@ -5,6 +5,29 @@ def create_issue_routes(server):
     metrics = server._augur.metrics
 
     """
+    @api {get} /repo-groups/:repo_group_id/repos/:repo_id/issues_top_ten_number_of_assignees Issues New (Repo Group)
+    @apiName issues-top-ten-number-of-assignees
+    @apiGroup Evolution
+    @apiDescription Count of open issues.
+                    <a href="https://github.com/chaoss/wg-evolution/blob/master/metrics/contributors-new.md">CHAOSS Metric Definition</a>
+    @apiParam {string} repo_group_id Repository Group ID
+    @apiSuccessExample {json} Success-Response:
+                    [
+                        {
+                            "rg_name": "Netflix",
+                            "open_count": 1,
+                            "date": "2017-09-11T00:00:00.000Z"
+                        },
+                        {
+                            "rg_name": "Netflix",
+                            "open_count": 4,
+                            "date": "2019-06-10T00:00:00.000Z"
+                        }
+                    ]
+    """
+    server.addRepoGroupMetric(metrics.issues_top_ten_number_of_assignees, 'issues-top-ten-number-of-assignees')
+
+    """
     @api {get} /repo-groups/:repo_group_id/issues-new Issues New (Repo Group)
     @apiName issues-new-repo-group
     @apiGroup Evolution
