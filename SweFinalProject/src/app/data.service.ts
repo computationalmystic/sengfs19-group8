@@ -12,7 +12,7 @@ export class DataService {
   
   public getRepos(){
     console.log("called getRepos");
-    return this.httpClient.get('http://augur.osshealth.io:5000/api/unstable/repos');
+    return this.httpClient.get('https://cors-anywhere.herokuapp.com/http://augur.osshealth.io:5000/api/unstable/repos');
   }
 
   public getGroups(){
