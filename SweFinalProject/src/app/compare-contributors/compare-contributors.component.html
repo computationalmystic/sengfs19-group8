@@ -1,1 +1,23 @@
-<p>Coming Soon!</p>
+<ng-container *ngIf="!repos">
+        <h4>Loading repository information...</h4>
+    </ng-container>
+    
+    <ng-container *ngIf="repos">
+        <form [formGroup]="repoChoiceForm">
+            <label>Repo 1</label>
+            <select formControlName="choice1">
+                <option [ngValue]="repo" *ngFor="let repo of repos"> {{repo.repo_name}}</option>
+            </select>
+    
+            <label>Repo 2</label>
+            <select formControlName="choice2">
+                <option [ngValue]="repo" *ngFor="let repo of repos"> {{repo.repo_name}}</option>
+            </select>
+    
+            <button [disabled]="!repoChoiceForm.valid" (click)="submitChoice()">Submit</button>
+        </form>
+    </ng-container>
+    
+    <ng-container *ngIf="">
+    
+    </ng-container>
