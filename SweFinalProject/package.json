@@ -19,8 +19,9 @@
     "@angular/platform-browser": "~8.2.13",
     "@angular/platform-browser-dynamic": "~8.2.13",
     "@angular/router": "~8.2.13",
-    "chart.js": "^2.9.2",
+    "chart.js": "^2.9.3",
     "ng-chartjs": "^0.1.2",
+    "ng2-charts": "^2.3.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

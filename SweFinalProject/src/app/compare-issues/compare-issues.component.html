@@ -4,12 +4,12 @@
 
 <ng-container *ngIf="repos">
     <form [formGroup]="repoChoiceForm">
-        <label>Repo 1</label>
+        <label>Repo 1: </label>
         <select formControlName="choice1">
             <option [ngValue]="repo" *ngFor="let repo of repos"> {{repo.repo_name}}</option>
         </select>
 
-        <label>Repo 2</label>
+        <label>Repo 2: </label>
         <select formControlName="choice2">
             <option [ngValue]="repo" *ngFor="let repo of repos"> {{repo.repo_name}}</option>
         </select>
@@ -18,6 +18,9 @@
     </form>
 </ng-container>
 
-<ng-container *ngIf="">
 
-</ng-container>
+<div>
+    <canvas baseChart [chartType]="'bar'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+        [legend]="true" (chartClick)="onChartClick($event)">
+    </canvas>
+</div>
