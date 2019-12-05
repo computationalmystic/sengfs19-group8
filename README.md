@@ -20,4 +20,6 @@
    - Added lines: 8-28
 - Modified file: sengfs19-group8/augur/metrics/issue/test_issue_routes.py
    - Added lines: 8-14
+- Modified file: sengfs19-group8/augur/metrics/issue/test_issue_functions.py
+   - Added lines: 11-14
 
