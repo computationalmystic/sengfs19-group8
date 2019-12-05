@@ -15,7 +15,7 @@ export class ReposComponent implements OnInit {
 
   ngOnInit() {
     console.log("getRepos");
-      this.dataService.getRepos().subscribe(data => {
+      this.dataService.getGroups().subscribe(data => {
         this.repos = data;
         console.log(this.repos);
       });

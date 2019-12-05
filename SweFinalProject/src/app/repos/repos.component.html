@@ -9,13 +9,12 @@
 <ng-container *ngIf="repos">
     <div class="card" *ngFor="let repo of repos">
        <div routerLink ="/list-issues/{{repo.repo_group_id}}">
-        <b>Group ID:{{repo.repo_group_id}}, Repo ID:{{repo.repo_id}}</b>
-        <h3 style=" font-size:small"><b>Repo Name:</b> {{repo.repo_name}}</h3>
-        <h3 style=" font-size:small"><b>Repo ID:</b> {{repo.repo_id}} </h3>
-        <h3 style=" font-size:small"><b>Repo URL:</b> {{repo.url}}</h3>
-        <h3 style=" font-size:small"><b>Repo Group ID:</b> {{repo.repo_group_id}}</h3>
-        <h3 style=" font-size:small"><b>All-time Commits:</b> {{repo.commits_all_time}}</h3>
-        <h3 style=" font-size:small"><b>Description:</b> {{repo.description}}</h3>
+        <b>Repo Name: {{repo.rg_name}}</b>
+        <h3 style=" font-size:small"><b>Group ID:</b> {{repo.repo_group_id}}</h3>
+        <h3 style=" font-size:small"><b>Description:</b> {{repo.rg_description}}</h3>
+        <h3 style=" font-size:small"><b>Repo Type:</b> {{repo.rg_type}} </h3>
+        <h3 style=" font-size:small"><b>Repo URL:</b> {{repo.rg_website}}</h3>
+        <h3 style=" font-size:small"><b>Last Modified:</b> {{repo.rg_last_modified | date:short}}</h3>
         <br>
       </div>
     </div>

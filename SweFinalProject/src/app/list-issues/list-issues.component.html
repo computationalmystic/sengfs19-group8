@@ -1,5 +1,5 @@
 <h1>Issues</h1>
-<h3>Below are the issues with assignees per project in the repo you selected.</h3>
+<h3>Below are top issues for Repo Group {{urlGroupId}}.</h3>
 <br>
 
 <ng-container *ngIf="!issues">
@@ -9,12 +9,10 @@
 <ng-container *ngIf="issues">
     <div *ngFor="let issue of issues">
         <div>
-            <b>Issue Title: {{issue.issue_title}}<b>
+            <h3><b>Issue Title: {{issue.issue_title}}</b></h3>
             <h3 style=" font-size:small">Assignee Count: {{issue.assignee_count}} </h3>
-            <h3 style=" font-size:small">Date Created: {{ issue.date | short }}</h3>
+            <h3 style=" font-size:small">Date Created: {{ issue.date | date:short }}</h3>
             <h3 style=" font-size:small">Repo Group Name: {{issue.rg_name}}</h3>
-            <h3 style=" font-size:small">Comment Count: </h3>
-            <br>
         </div>
     </div>
 </ng-container>
