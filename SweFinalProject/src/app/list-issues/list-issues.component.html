@@ -1,28 +1,18 @@
 <h1>Issues</h1>
-<h3>Below are the issues with assignees per project in the repo you selected.</h3>
+<h3>Below are top issues for Repo Group {{urlGroupId}}.</h3>
 <br>
 
-<!-- <div style="display: block">
-    <canvas mdbChart [chartType]="line" [datasets]="chartDatasets" [labels]="chartLabels" [colors]="chartColors"
-        [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)">
-    </canvas>
-</div> -->
-
-
-<!-- <ng-container *ngIf="!issues">
+<ng-container *ngIf="!issues">
     <h4>Loading issue information...</h4>
 </ng-container>
 
 <ng-container *ngIf="issues">
     <div *ngFor="let issue of issues">
         <div>
-            <h3 style=" font-size:small">User ID: </h3>
-            <h3 style=" font-size:small">Issue ID: </h3>
-            <h3 style=" font-size:small">Issue Body: </h3>
-            <h3 style=" font-size:small">Git Issue Number:</h3>
-            <h3 style=" font-size:small">Comment Count: </h3>
-            <br>
+            <h3><b>Issue Title: {{issue.issue_title}}</b></h3>
+            <h3 style=" font-size:small">Assignee Count: {{issue.assignee_count}} </h3>
+            <h3 style=" font-size:small">Date Created: {{ issue.date | date:short }}</h3>
+            <h3 style=" font-size:small">Repo Group Name: {{issue.rg_name}}</h3>
         </div>
     </div>
-</ng-container> -->
+</ng-container>

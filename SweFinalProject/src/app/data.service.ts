@@ -17,11 +17,12 @@ export class DataService {
 
   public getGroups(){
     console.log("called getGroups");
-    return this.httpClient.get('http://augur.osshealth.io:5000/api/unstable/repo-groups')
+    return this.httpClient.get('http://augur.osshealth.io:5000/api/unstable/repo-groups');
   }
 
-  public getListIssues(rgid, rpid) {
-    return this.httpClient.get("https://cors-anywhere.herokuapp.com/http://129.114.104.249:8081/repo-groups/" + rgid + "/repos/" + rpid + "/assignee-issues-assigned-to/")
+  public getListIssues(rgid) {
+    console.log("called getListIssues");
+    return this.httpClient.get("https://cors-anywhere.herokuapp.com/http://129.114.104.249:5000/api/unstable/repo-groups/" + rgid + "/issues-top-ten-number-of-assignees");
   }
 
 }
