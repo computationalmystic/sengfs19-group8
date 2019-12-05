@@ -8,7 +8,8 @@
 - Basic Augur installation
 
 - Run the backend server using the command "augur run"
- - Frontend is not run off of Augur repo
+  - Frontend is not run off of Augur repo
+  - Augur was run off of the Linux servers we were given for this class, this was NOT run off of a Windows installation
 - Metric visualizations are visible on website: https://www.clairehough.com/CS4320
 
 
