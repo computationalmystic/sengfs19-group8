@@ -8,7 +8,8 @@
 - Basic Augur installation
 
 - Run the backend server using the command "augur run"
-- Metrics are visible on website: https://www.clairehough.com/CS4320
+ - Frontend is not run off of Augur repo
+- Metric visualizations are visible on website: https://www.clairehough.com/CS4320
 
 
 # MODIFIED CODE
@@ -17,4 +18,6 @@
    - Added lines: 10-45
 - Modified file: sengfs19-group8/augur/metrics/issue/routes.py
    - Added lines: 8-28
+- Modified file: sengfs19-group8/augur/metrics/issue/test_issue_routes.py
+   - Added lines: 8-14
 
