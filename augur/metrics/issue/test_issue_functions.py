@@ -8,6 +8,10 @@ def metrics():
     augur_app = augur.Application()
     return augur_app.metrics
 
+def test_issues_top_ten_number_of_assignees(metrics):
+    #repo_group_id
+    assert metrics.issues_new(23, period='year').iloc[1]['assignee_count'] > 0
+
 def test_issues_new(metrics):
     #repo_id
     assert metrics.issues_new(23, 21403, period='year').iloc[0]['issues'] > 0
