@@ -5,10 +5,10 @@
 
 # DEPLOYMENT INSTRUCTIONS
 
--Basic Augur installation
+- Basic Augur installation
 
--Run the backend server using the command "augur run"
--Metrics are visible on website: https://www.clairehough.com/CS4320
+- Run the backend server using the command "augur run"
+- Metrics are visible on website: https://www.clairehough.com/CS4320
 
 
 # MODIFIED CODE
