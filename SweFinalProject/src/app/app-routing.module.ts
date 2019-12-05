@@ -11,7 +11,7 @@ import { ReposComponent } from './repos/repos.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'repos', component: ReposComponent},
-  { path: 'list-issues/:groupId/:repoId', component: ListIssuesComponent},
+  { path: 'list-issues/:groupId', component: ListIssuesComponent},
   { path: 'compare-contributors', component: CompareContributorsComponent},
   { path: 'compare-issues', component: CompareIssuesComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },

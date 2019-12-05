@@ -16,11 +16,11 @@
 
         <button [disabled]="!repoChoiceForm.valid" (click)="submitChoice()">Submit</button>
     </form>
+
+
+    <div *ngIf="showchart">
+        <canvas baseChart [chartType]="'bar'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+            [legend]="true" (chartClick)="onChartClick($event)">
+        </canvas>
+    </div>
 </ng-container>
-
-
-<div>
-    <canvas baseChart [chartType]="'bar'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
-        [legend]="true" (chartClick)="onChartClick($event)">
-    </canvas>
-</div>

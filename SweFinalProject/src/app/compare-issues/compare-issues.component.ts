@@ -20,6 +20,8 @@ export class CompareIssuesComponent implements OnInit {
   });
 
   repos: Object;
+  showchart: boolean = false;
+
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private fb: FormBuilder) { }
 
@@ -32,7 +34,7 @@ export class CompareIssuesComponent implements OnInit {
   }
 
   submitChoice() {
-
+    this.showchart = true;
   }
 
   chartOptions = {
