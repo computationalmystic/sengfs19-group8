@@ -20,7 +20,7 @@ export class CompareIssuesComponent implements OnInit {
   });
 
   repos: Object;
-  showchart: boolean = true;
+  showchart: boolean = false;
   chartData = [
     {data: [], label: ''},
     {data: [], label: ''}
@@ -44,8 +44,6 @@ export class CompareIssuesComponent implements OnInit {
       { data: [this.repoChoiceForm.value.choice1.issues_all_time], label: this.repoChoiceForm.value.choice1.repo_name },
       { data: [this.repoChoiceForm.value.choice2.issues_all_time], label: this.repoChoiceForm.value.choice2.repo_name }
     ];
-
-    console.log(this.chartData);
   }
 
   // https://stackoverflow.com/questions/52338021/ng-2-charts-cant-get-bar-chart-axis-to-start-at-0

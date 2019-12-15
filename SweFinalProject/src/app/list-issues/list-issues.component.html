@@ -11,7 +11,7 @@
         <div>
             <h3><b>Issue Title: {{issue.issue_title}}</b></h3>
             <h3 style=" font-size:small">Assignee Count: {{issue.assignee_count}} </h3>
-            <h3 style=" font-size:small">Date Created: {{ issue.date | date:short }}</h3>
+            <h3 style=" font-size:small">Date Created: {{ issue.date | date:"M/d/yy, h:mm a" }}</h3>
             <h3 style=" font-size:small">Repo Group Name: {{issue.rg_name}}</h3>
         </div>
     </div>
