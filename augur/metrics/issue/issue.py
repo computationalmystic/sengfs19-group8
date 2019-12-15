@@ -7,6 +7,44 @@ import sqlalchemy as s
 import pandas as pd
 from augur.util import logger, annotate, add_metrics
 
+@annotate(tag='issues-top-ten-number-of-assignees')
+def issues_top_ten_number_of_assignees(self, repo_group_id, repo_id=None):
+    """
+    Returns top ten issues based on greatest number of assignees for each repo group
+
+    :param repo_url: the repository's URL
+    """
+    if not repo_id:
+        openIssueCountSQL = s.sql.text("""
+            SELECT rg_name, issue_title, count(issue_assignee_id) AS assignee_count, date_trunc('week', issues.created_at) AS DATE
+            FROM issues, repo, repo_groups, issue_assignees
+            WHERE issue_state = 'open'
+            AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_group_id = :repo_group_id)
+            AND repo.repo_id = issues.repo_id
+            AND repo.repo_group_id = repo_groups.repo_group_id
+            AND issues.pull_request IS NULL
+            AND issues.issue_id = issue_assignees.issue_id
+            GROUP BY date, repo_groups.rg_name, issues.issue_title
+            ORDER BY date
+        """)
+        results = pd.read_sql(openIssueCountSQL, self.database, params={'repo_group_id': repo_group_id})
+        return results
+    else:
+        openIssueCountSQL = s.sql.text("""
+            SELECT repo.repo_id, count(issue_id) AS open_count, date_trunc('week', issues.created_at) AS DATE, repo_name
+            FROM issues, repo, repo_groups
+            WHERE issue_state = 'open'
+            AND issues.repo_id = :repo_id
+            AND repo.repo_id = issues.repo_id
+            AND repo.repo_group_id = repo_groups.repo_group_id
+            AND issues.pull_request IS NULL
+            GROUP BY date, repo.repo_id
+            ORDER BY date
+        """)
+        results = pd.read_sql(openIssueCountSQL, self.database, params={'repo_id': repo_id})
+        return results
+
+
 @annotate(tag='issues-first-time-opened')
 def issues_first_time_opened(self, repo_group_id, repo_id=None, period='day', begin_date=None, end_date=None):
     """
@@ -64,7 +102,7 @@ def issues_first_time_opened(self, repo_group_id, repo_id=None, period='day', be
                 FROM
                     issues
                 WHERE
-                    issues.pull_request IS NULL 
+                    issues.pull_request IS NULL
                     AND repo_id in (SELECT repo_id FROM repo WHERE repo_group_id=:repo_group_id)
                     AND created_at BETWEEN :begin_date AND :end_date
                 GROUP BY gh_user_id, repo_id
@@ -109,7 +147,7 @@ def issues_first_time_closed(self, repo_group_id, repo_id=None, period='day', be
                     WHERE repo.repo_id = :repo_id
                     AND action = 'closed'
                     AND repo.repo_id = issues.repo_id
-                    AND issues.pull_request IS NULL 
+                    AND issues.pull_request IS NULL
                     AND issues.issue_id = issue_events.issue_id
                     And issue_events.created_at BETWEEN :begin_date AND :end_date
                     GROUP BY issue_events.cntrb_id, repo_name
@@ -129,7 +167,7 @@ def issues_first_time_closed(self, repo_group_id, repo_id=None, period='day', be
                         repo,
                         issues
                     WHERE repo.repo_group_id = :repo_group_id
-                    AND issues.pull_request IS NULL 
+                    AND issues.pull_request IS NULL
                     AND action = 'closed'
                     AND repo.repo_id = issues.repo_id
                     AND issues.issue_id = issue_events.issue_id
@@ -660,7 +698,7 @@ def average_issue_resolution_time(self, repo_group_id, repo_id=None):
             WHERE issues.repo_id IN
                 (SELECT repo_id FROM repo WHERE  repo_group_id = :repo_group_id)
             AND closed_at IS NOT NULL
-            AND pull_request IS NULL 
+            AND pull_request IS NULL
             GROUP BY issues.repo_id, repo.repo_name
             ORDER BY issues.repo_id
         """)
@@ -677,7 +715,7 @@ def average_issue_resolution_time(self, repo_group_id, repo_id=None):
             FROM issues JOIN repo ON issues.repo_id = repo.repo_id
             WHERE issues.repo_id = :repo_id
             AND closed_at IS NOT NULL
-            AND pull_request IS NULL 
+            AND pull_request IS NULL
             GROUP BY repo.repo_name
         """)
 
@@ -774,7 +812,7 @@ def open_issues_count(self, repo_group_id, repo_id=None):
             AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_group_id = :repo_group_id)
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
-            AND issues.pull_request IS NULL 
+            AND issues.pull_request IS NULL
             GROUP BY date, repo_groups.rg_name
             ORDER BY date
         """)
@@ -788,7 +826,7 @@ def open_issues_count(self, repo_group_id, repo_id=None):
             AND issues.repo_id = :repo_id
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
-            AND issues.pull_request IS NULL 
+            AND issues.pull_request IS NULL
             GROUP BY date, repo.repo_id
             ORDER BY date
         """)
@@ -811,7 +849,7 @@ def closed_issues_count(self, repo_group_id, repo_id=None):
             AND issues.repo_id IN (SELECT repo_id FROM repo WHERE  repo_group_id = :repo_group_id)
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
-            AND issues.pull_request IS NULL 
+            AND issues.pull_request IS NULL
             GROUP BY date, repo_groups.rg_name
             ORDER BY date
         """)
@@ -825,7 +863,7 @@ def closed_issues_count(self, repo_group_id, repo_id=None):
             AND issues.repo_id = :repo_id
             AND repo.repo_id = issues.repo_id
             AND repo.repo_group_id = repo_groups.repo_group_id
-            AND issues.pull_request IS NULL 
+            AND issues.pull_request IS NULL
             GROUP BY date, repo.repo_id
             ORDER BY date
         """)
@@ -845,7 +883,7 @@ def issue_comments_mean(self, repo_group_id, repo_id=None, group_by='week'):
                     COUNT(*) / 7.0 AS mean
                 FROM issues i, issue_message_ref im, message m
                 WHERE i.issue_id = im.issue_id
-                AND i.pull_request IS NULL 
+                AND i.pull_request IS NULL
                 AND im.msg_id = m.msg_id
                 AND i.repo_id IN
                     (SELECT repo_id FROM repo
@@ -862,7 +900,7 @@ def issue_comments_mean(self, repo_group_id, repo_id=None, group_by='week'):
                     COUNT(*) / 30.0 AS mean
                 FROM issues i, issue_message_ref im, message m
                 WHERE i.issue_id = im.issue_id
-                AND i.pull_request IS NULL 
+                AND i.pull_request IS NULL
                 AND im.msg_id = m.msg_id
                 AND i.repo_id IN
                     (SELECT repo_id FROM repo
@@ -880,7 +918,7 @@ def issue_comments_mean(self, repo_group_id, repo_id=None, group_by='week'):
                 FROM issues i, issue_message_ref im, message m
                 WHERE i.issue_id = im.issue_id
                 AND im.msg_id = m.msg_id
-                AND i.pull_request IS NULL 
+                AND i.pull_request IS NULL
                 AND i.repo_id IN
                     (SELECT repo_id FROM repo
                      WHERE  repo_group_id = :repo_group_id)
@@ -904,7 +942,7 @@ def issue_comments_mean(self, repo_group_id, repo_id=None, group_by='week'):
                     COUNT(*) / 7.0 AS mean
                 FROM issues i, issue_message_ref im, message m
                 WHERE i.issue_id = im.issue_id
-                AND i.pull_request IS NULL 
+                AND i.pull_request IS NULL
                 AND i.repo_id = :repo_id
                 AND im.msg_id = m.msg_id
                 GROUP BY i.repo_id, date
@@ -919,7 +957,7 @@ def issue_comments_mean(self, repo_group_id, repo_id=None, group_by='week'):
                     COUNT(*) / 30.0 AS mean
                 FROM issues i, issue_message_ref im, message m
                 WHERE i.issue_id = im.issue_id
-                AND i.pull_request IS NULL 
+                AND i.pull_request IS NULL
                 AND i.repo_id = :repo_id
                 AND im.msg_id = m.msg_id
                 GROUP BY i.repo_id, date
@@ -934,7 +972,7 @@ def issue_comments_mean(self, repo_group_id, repo_id=None, group_by='week'):
                     COUNT(*) / 365.0 AS mean
                 FROM issues i, issue_message_ref im, message m
                 WHERE i.issue_id = im.issue_id
-                AND i.pull_request IS NULL 
+                AND i.pull_request IS NULL
                 AND i.repo_id = :repo_id
                 AND im.msg_id = m.msg_id
                 GROUP BY i.repo_id, date
@@ -964,7 +1002,7 @@ def issue_comments_mean_std(self, repo_group_id, repo_id=None, group_by='week'):
                     COUNT(*) AS total
                 FROM issues i, issue_message_ref im, message m
                 WHERE i.issue_id = im.issue_id
-                AND i.pull_request IS NULL 
+                AND i.pull_request IS NULL
                 AND im.msg_id = m.msg_id
                 AND i.repo_id IN
                     (SELECT repo_id FROM repo
@@ -994,7 +1032,7 @@ def issue_comments_mean_std(self, repo_group_id, repo_id=None, group_by='week'):
                     COUNT(*) AS total
                 FROM issues i, issue_message_ref im, message m
                 WHERE i.issue_id = im.issue_id
-                AND i.pull_request IS NULL 
+                AND i.pull_request IS NULL
                 AND im.msg_id = m.msg_id
                 AND i.repo_id = :repo_id
                 GROUP BY i.repo_id, daily
@@ -1030,7 +1068,7 @@ def abandoned_issues(self, repo_group_id, repo_id=None, period='day', begin_date
 	            AND DATE_PART('year',current_date) - DATE_PART('year', updated_at) >= 1
             GROUP BY
 	            updated_at, issue_id
-            ORDER BY 
+            ORDER BY
                 updated_at, issue_id
             '''
         )
@@ -1049,7 +1087,7 @@ def abandoned_issues(self, repo_group_id, repo_id=None, period='day', begin_date
 	            AND DATE_PART('year',current_date) - DATE_PART('year', updated_at) >= 1
             GROUP BY
 	            updated_at, issue_id, repo_id
-            ORDER BY 
+            ORDER BY
                 updated_at, issue_id, repo_id
             '''
         )
@@ -1057,7 +1095,7 @@ def abandoned_issues(self, repo_group_id, repo_id=None, period='day', begin_date
     results = pd.read_sql(abandonedSQL, self.database, params={'repo_id': repo_id, 'repo_group_id': repo_group_id, 'period': period,
                                                                  'begin_date': begin_date, 'end_date': end_date})
     return results
-    
+
 
 def create_issue_metrics(metrics):
     add_metrics(metrics, __name__)
