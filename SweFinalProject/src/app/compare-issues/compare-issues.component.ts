@@ -20,8 +20,11 @@ export class CompareIssuesComponent implements OnInit {
   });
 
   repos: Object;
-  showchart: boolean = false;
-
+  showchart: boolean = true;
+  chartData = [
+    {data: [], label: ''},
+    {data: [], label: ''}
+  ];
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private fb: FormBuilder) { }
 
@@ -35,19 +38,31 @@ export class CompareIssuesComponent implements OnInit {
 
   submitChoice() {
     this.showchart = true;
+    console.log(this.repoChoiceForm.value);
+
+    this.chartData = [
+      { data: [this.repoChoiceForm.value.choice1.issues_all_time], label: this.repoChoiceForm.value.choice1.repo_name },
+      { data: [this.repoChoiceForm.value.choice2.issues_all_time], label: this.repoChoiceForm.value.choice2.repo_name }
+    ];
+
+    console.log(this.chartData);
   }
 
+  // https://stackoverflow.com/questions/52338021/ng-2-charts-cant-get-bar-chart-axis-to-start-at-0
   chartOptions = {
-    responsive: true
+    responsive: true,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      ]
+    }
   };
 
-  chartData = [
-    { data: [330, 600, 260, 700], label: 'Account A' },
-    { data: [120, 455, 100, 340], label: 'Account B' },
-    { data: [45, 67, 800, 500], label: 'Account C' }
-  ];
-
-  chartLabels = ['January', 'February', 'Mars', 'April'];
+  chartLabels = ['Issues for All Time'];
 
   onChartClick(event) {
     console.log(event);
